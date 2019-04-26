@@ -40,19 +40,14 @@ public class RoverTelemetry extends AppCompatActivity {
     private void checkSubscriptions()
     {
         SharedPreferences sharedPref = getSharedPreferences("subscriptions", Context.MODE_PRIVATE);
-        if (sharedPref.getBoolean("ack.msg", false))
+        if (sharedPref.getBoolean(Integer.toString(R.id.ack_msg), false))
         {
             ToggleButton tb = findViewById(R.id.ack_msg);
             tb.setChecked(true);
         }
-        if (sharedPref.getBoolean("power_telemetry.battery_I", false))
+        if (sharedPref.getBoolean(Integer.toString(R.id.power_telemetry_battery_I), false))
         {
             ToggleButton tb = findViewById(R.id.power_telemetry_battery_I);
-            tb.setChecked(true);
-        }
-        if (sharedPref.getBoolean("power_telemetry.battery_V", false))
-        {
-            ToggleButton tb = findViewById(R.id.power_telemetry_battery_V);
             tb.setChecked(true);
         }
     }
@@ -61,15 +56,16 @@ public class RoverTelemetry extends AppCompatActivity {
     private void initToggleButtons(final int myToggleButton)
     {
         ToggleButton toggle = findViewById(myToggleButton);
-        final String buttonName = getResources().getResourceEntryName(myToggleButton);
+        final String buttonId = Integer.toString(myToggleButton);
+        //final String buttonName = getResources().getResourceEntryName(myToggleButton);
 
         toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    editor.putBoolean(buttonName, true);
+                    editor.putBoolean(buttonId, true);
                 } else {
-                    editor.remove(buttonName);
-                    editor.putBoolean(buttonName, false);
+                    editor.remove(buttonId);
+                    editor.putBoolean(buttonId, false);
                 }
                 editor.commit();
             }

@@ -156,6 +156,7 @@ public class Rover extends AppCompatActivity {
     private void checkSubscriptions()
     {
         SharedPreferences sharedPref = getSharedPreferences("subscriptions", Context.MODE_PRIVATE);
+        /*
         ArrayList<String> keys = new ArrayList<>();
         keys.add("ack.msg");
         keys.add("power_telemetry.battery_I");
@@ -167,16 +168,15 @@ public class Rover extends AppCompatActivity {
                 ws.send("s " + keys.get(i));
             }
         }
-        /*
-        if (sharedPref.getBoolean("ack.msg", false))
+        */
+        if (sharedPref.getBoolean(Integer.toString(R.id.ack_msg), false))
         {
             ws.send("s ack.msg");
         }
-        if (sharedPref.getBoolean("power_telemetry.battery_I", false))
+        if (sharedPref.getBoolean(Integer.toString(R.id.power_telemetry_battery_I), false))
         {
             ws.send("s power_telemetry.battery_I");
         }
-        */
     }
 
     public void goToActivity(View v)
