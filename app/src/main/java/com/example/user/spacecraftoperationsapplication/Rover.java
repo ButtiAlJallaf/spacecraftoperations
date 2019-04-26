@@ -28,7 +28,7 @@ import okhttp3.WebSocket;
 import okhttp3.WebSocketListener;
 
 public class Rover extends AppCompatActivity {
-
+    //Global variables
     private TextView tvOutputMsg;
     private TextView tvOutputBatteryI;
     private TextView tvOutputBatteryV;
@@ -37,6 +37,7 @@ public class Rover extends AppCompatActivity {
     private TextView tvOutputMotorRF;
     private TextView tvOutputMotorRR;
     private WebSocket ws;
+    private SharedPreferences sharedPref;
 
     private void displayToast(final String msg)
     {
@@ -153,29 +154,11 @@ public class Rover extends AppCompatActivity {
         });
     }
 
-    private void checkSubscriptions()
+    private void checkSubscriptions(int myToggleButton)
     {
-        SharedPreferences sharedPref = getSharedPreferences("subscriptions", Context.MODE_PRIVATE);
-        /*
-        ArrayList<String> keys = new ArrayList<>();
-        keys.add("ack.msg");
-        keys.add("power_telemetry.battery_I");
-        keys.add("power_telemetry.battery_V");
-        for (int i = 0; i < keys.size(); i++)
+        if (sharedPref.getBoolean(Integer.toString(myToggleButton), false))
         {
-            if (sharedPref.getBoolean(keys.get(i), false))
-            {
-                ws.send("s " + keys.get(i));
-            }
-        }
-        */
-        if (sharedPref.getBoolean(Integer.toString(R.id.ack_msg), false))
-        {
-            ws.send("s ack.msg");
-        }
-        if (sharedPref.getBoolean(Integer.toString(R.id.power_telemetry_battery_I), false))
-        {
-            ws.send("s power_telemetry.battery_I");
+            ws.send("s " + getResources().getResourceEntryName(myToggleButton));
         }
     }
 
@@ -207,6 +190,14 @@ public class Rover extends AppCompatActivity {
         tvOutputMotorRF = findViewById(R.id.tvOutputMotorRF);
         tvOutputMotorRR = findViewById(R.id.tvOutputMotorRR);
 
-        checkSubscriptions();
+        //Check the keys the user is subscribed to.
+        sharedPref = getSharedPreferences("subscriptions", Context.MODE_PRIVATE);
+        checkSubscriptions(R.id.ack_msg);
+        checkSubscriptions(R.id.power_telemetry_battery_I);
+        checkSubscriptions(R.id.power_telemetry_battery_V);
+        checkSubscriptions(R.id.power_telemetry_motor_lf_I);
+        checkSubscriptions(R.id.power_telemetry_motor_lr_I);
+        checkSubscriptions(R.id.power_telemetry_motor_rf_I);
+        checkSubscriptions(R.id.power_telemetry_motor_rr_I);
     }
 }

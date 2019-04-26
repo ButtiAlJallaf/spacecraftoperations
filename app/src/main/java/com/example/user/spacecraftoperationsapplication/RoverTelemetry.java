@@ -33,23 +33,6 @@ public class RoverTelemetry extends AppCompatActivity {
         initToggleButtons(R.id.power_telemetry_motor_lr_I);
         initToggleButtons(R.id.power_telemetry_motor_rf_I);
         initToggleButtons(R.id.power_telemetry_motor_rr_I);
-
-        checkSubscriptions();
-    }
-
-    private void checkSubscriptions()
-    {
-        SharedPreferences sharedPref = getSharedPreferences("subscriptions", Context.MODE_PRIVATE);
-        if (sharedPref.getBoolean(Integer.toString(R.id.ack_msg), false))
-        {
-            ToggleButton tb = findViewById(R.id.ack_msg);
-            tb.setChecked(true);
-        }
-        if (sharedPref.getBoolean(Integer.toString(R.id.power_telemetry_battery_I), false))
-        {
-            ToggleButton tb = findViewById(R.id.power_telemetry_battery_I);
-            tb.setChecked(true);
-        }
     }
 
     //This function takes the resource id and subscription key as parameters. It adds a listener to the toggle buttons.
@@ -57,7 +40,12 @@ public class RoverTelemetry extends AppCompatActivity {
     {
         ToggleButton toggle = findViewById(myToggleButton);
         final String buttonId = Integer.toString(myToggleButton);
-        //final String buttonName = getResources().getResourceEntryName(myToggleButton);
+
+        if (sharedPref.getBoolean(buttonId, false))
+        {
+            ToggleButton tb = findViewById(myToggleButton);
+            tb.setChecked(true);
+        }
 
         toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
