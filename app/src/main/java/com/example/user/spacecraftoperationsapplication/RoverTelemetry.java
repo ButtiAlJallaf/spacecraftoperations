@@ -50,6 +50,11 @@ public class RoverTelemetry extends AppCompatActivity {
             ToggleButton tb = findViewById(R.id.power_telemetry_battery_I);
             tb.setChecked(true);
         }
+        if (sharedPref.getBoolean("power_telemetry.battery_V", false))
+        {
+            ToggleButton tb = findViewById(R.id.power_telemetry_battery_V);
+            tb.setChecked(true);
+        }
     }
 
     //This function takes the resource id and subscription key as parameters. It adds a listener to the toggle buttons.

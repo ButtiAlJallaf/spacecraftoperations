@@ -19,6 +19,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -154,22 +156,34 @@ public class Rover extends AppCompatActivity {
     private void checkSubscriptions()
     {
         SharedPreferences sharedPref = getSharedPreferences("subscriptions", Context.MODE_PRIVATE);
+        ArrayList<String> keys = new ArrayList<>();
+        keys.add("ack.msg");
+        keys.add("power_telemetry.battery_I");
+        keys.add("power_telemetry.battery_V");
+        for (int i = 0; i < keys.size(); i++)
+        {
+            if (sharedPref.getBoolean(keys.get(i), false))
+            {
+                ws.send("s " + keys.get(i));
+            }
+        }
+        /*
         if (sharedPref.getBoolean("ack.msg", false))
         {
-            System.out.println("ack.msg is subscribed");
             ws.send("s ack.msg");
         }
         if (sharedPref.getBoolean("power_telemetry.battery_I", false))
         {
-            System.out.println("power_telemetry.battery_I is subscribed");
             ws.send("s power_telemetry.battery_I");
         }
+        */
     }
 
     public void goToActivity(View v)
     {
         Intent i = new Intent(this, RoverTelemetry.class);
         startActivity(i);
+        ws.close(1000, "User left activity");
     }
 
     @Override
