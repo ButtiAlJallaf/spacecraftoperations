@@ -19,7 +19,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.text.SimpleDateFormat;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -46,6 +52,26 @@ public class Rover extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void setTime(int resourceId)
+    {
+        final TextView tv = findViewById(resourceId);
+        final DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Date currentTime = Calendar.getInstance().getTime();
+                        String formattedDate = dateFormat.format(currentTime);
+                        tv.setText("GMT: " + formattedDate);
+                    }
+                });
+            }
+        }, 0, 1000);//1000 is a Refreshing Time (1second)
     }
 
     //ID is the key of the JSON object. Value is the value of the JSON object. Min and max are the warning range. Textview is used for setting colors.
@@ -199,5 +225,7 @@ public class Rover extends AppCompatActivity {
         checkSubscriptions(R.id.power_telemetry_motor_lr_I);
         checkSubscriptions(R.id.power_telemetry_motor_rf_I);
         checkSubscriptions(R.id.power_telemetry_motor_rr_I);
+
+        setTime(R.id.tvTime);
     }
 }

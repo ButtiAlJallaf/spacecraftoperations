@@ -9,7 +9,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.CompoundButton;
+import android.widget.TextView;
 import android.widget.ToggleButton;
+import java.util.Calendar;
+import java.util.Date;
 
 public class RoverTelemetry extends AppCompatActivity {
     //Global variables
