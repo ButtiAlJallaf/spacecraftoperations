@@ -6,6 +6,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -41,5 +42,26 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void openAboutUs(View view)
+    {
+        Intent aboutus = new Intent(getApplicationContext(),AboutUs.class);
+
+        startActivity(aboutus);
+    }
+
+    public void openSubscribe(View view)
+    {
+        Intent subscribe = new Intent(getApplicationContext(),RoverTelemetry.class);
+
+        startActivity(subscribe);
+    }
+
+    public void openCredits(View view)
+    {
+        Intent credits = new Intent(getApplicationContext(),Credits.class);
+
+        startActivity(credits);
     }
 }
