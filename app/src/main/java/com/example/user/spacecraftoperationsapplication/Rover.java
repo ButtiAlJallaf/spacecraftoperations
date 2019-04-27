@@ -18,6 +18,7 @@ import android.widget.ToggleButton;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
+import com.jjoe64.graphview.series.PointsGraphSeries;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -240,6 +241,5 @@ public class Rover extends AppCompatActivity {
                 new DataPoint(3, 2),
                 new DataPoint(4, 6)
         });
-        graph.addSeries(series);
     }
 }
