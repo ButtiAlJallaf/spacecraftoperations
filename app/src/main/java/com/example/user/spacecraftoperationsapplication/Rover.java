@@ -102,33 +102,41 @@ public class Rover extends AppCompatActivity {
             try {
                 JSONObject jObject = new JSONObject(text);
                 String id = jObject.getString("id");
+                String value;
                 switch (id)
                 {
                     case "ack.msg":
-                        tvOutputMsg.setText(jObject.getString("value"));
+                        value = "Acknowledgement: " + jObject.getString("value");
+                        tvOutputMsg.setText(value);
                         break;
                     case "power_telemetry.battery_I":
-                        tvOutputBatteryI.setText(jObject.getString("value"));
+                        value = "Battery I: " + jObject.getString("value");
+                        tvOutputBatteryI.setText(value);
                         checkValue(tvOutputBatteryI, id, jObject.getDouble("value"), 0.25, 2.75);
                         break;
                     case "power_telemetry.battery_V":
-                        tvOutputBatteryV.setText(jObject.getString("value"));
+                        value = "Battery V: " + jObject.getString("value");
+                        tvOutputBatteryV.setText(value);
                         checkValue(tvOutputBatteryV, id, jObject.getDouble("value"), 4.75, 5.25);
                         break;
                     case "power_telemetry.motor_rf_I":
-                        tvOutputMotorRF.setText(jObject.getString("value"));
+                        value = "Motor RF: " + jObject.getString("value");
+                        tvOutputMotorRF.setText(value);
                         checkValue(tvOutputMotorRF, id, jObject.getDouble("value"), 0.25, 2.75);
                         break;
                     case "power_telemetry.motor_rr_I":
-                        tvOutputMotorRR.setText(jObject.getString("value"));
+                        value = "Motor RR: " + jObject.getString("value");
+                        tvOutputMotorRR.setText(value);
                         checkValue(tvOutputMotorRR, id, jObject.getDouble("value"), 0.25, 2.75);
                         break;
                     case "power_telemetry.motor_lf_I":
-                        tvOutputMotorLF.setText(jObject.getString("value"));
+                        value = "Motor LF: " + jObject.getString("value");
+                        tvOutputMotorLF.setText(value);
                         checkValue(tvOutputMotorLF, id, jObject.getDouble("value"), 0.25, 2.75);
                         break;
                     case "power_telemetry.motor_lr_I":
-                        tvOutputMotorLR.setText(jObject.getString("value"));
+                        value = "Motor LR: " + jObject.getString("value");
+                        tvOutputMotorLR.setText(value);
                         checkValue(tvOutputMotorLR, id, jObject.getDouble("value"), 0.25, 2.75);
                         break;
                     default: System.out.println("Error: Unknown message received.");
@@ -202,7 +210,7 @@ public class Rover extends AppCompatActivity {
         initBottomNav(); //Code by Butti to initialize the bottom navigation.
 
         //Establishing a websocket connection
-        Request request = new Request.Builder().url("ws://192.168.1.140:3739/").build(); //The IP of the server.
+        Request request = new Request.Builder().url("ws://192.168.1.148:3739/").build(); //The IP of the server.
         EchoWebSocketListener listener = new EchoWebSocketListener();
         OkHttpClient client = new OkHttpClient();
         ws = client.newWebSocket(request, listener);
