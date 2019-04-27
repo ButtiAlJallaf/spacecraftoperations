@@ -4,4 +4,6 @@
     <color name="colorPrimaryDark">#38ACEC</color>
     <color name="colorAccent">#D81B60</color>
     <color name="lightblue">#38ACEC</color>
+    <color name="sub_button">#329932</color>
+    <color name="unsub_button">#b70000</color>
 </resources>

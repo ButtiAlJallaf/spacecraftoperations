@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="?attr/backgroundcolor"
     tools:context=".RoverTelemetry">
 
     <LinearLayout
@@ -12,7 +13,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="10dp">
 
         <TextView
             android:id="@+id/lblHeading"
@@ -20,158 +22,188 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Subscriptions"
+            android:textColor="?attr/textcolor"
             android:textSize="36sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:textColor="?attr/textcolor"
+            android:layout_marginTop="10dp">
 
             <TextView
                 android:id="@+id/lblAcknowledge"
                 android:layout_width="105dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="Acknowledge:" />
+                android:text="Acknowledge:"
+                android:textColor="?attr/textcolor"/>
 
             <ToggleButton
                 android:id="@+id/ack.msg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="ToggleButton"
-                android:textOff="Sub"
-                android:textOn="Unsub" />
+                android:textOff="+"
+                android:textOn="-"
+                android:textColor="?attr/textcolor"
+                android:background="@drawable/sub_button_colors"/>
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
 
             <TextView
                 android:id="@+id/textView7"
                 android:layout_width="105dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="Battery I:" />
+                android:text="Battery I:"
+                android:textColor="?attr/textcolor"/>
 
             <ToggleButton
                 android:id="@+id/power_telemetry.battery_I"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="ToggleButton"
-                android:textOff="Sub"
-                android:textOn="Unsub" />
+                android:textOff="+"
+                android:textOn="-"
+                android:textColor="?attr/textcolor"
+                android:background="@drawable/sub_button_colors"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
 
             <TextView
                 android:id="@+id/lblBatteryV"
                 android:layout_width="105dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="Battery V:" />
+                android:text="Battery V:"
+                android:textColor="?attr/textcolor"/>
 
             <ToggleButton
                 android:id="@+id/power_telemetry.battery_V"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="ToggleButton"
-                android:textOff="Sub"
-                android:textOn="Unsub" />
+                android:textOff="+"
+                android:textOn="-"
+                android:textColor="?attr/textcolor"
+                android:background="@drawable/sub_button_colors"/>
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
 
             <TextView
                 android:id="@+id/lblMotorRF"
                 android:layout_width="105dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="Motor RF:" />
+                android:text="Motor RF:"
+                android:textColor="?attr/textcolor"/>
 
             <ToggleButton
                 android:id="@+id/power_telemetry.motor_rf_I"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="ToggleButton"
-                android:textOff="Sub"
-                android:textOn="Unsub" />
+                android:textOff="+"
+                android:textOn="-"
+                android:textColor="?attr/textcolor"
+                android:background="@drawable/sub_button_colors"/>
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
 
             <TextView
                 android:id="@+id/lblNewMotorRF"
                 android:layout_width="105dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="Motor RR:" />
+                android:text="Motor RR:"
+                android:textColor="?attr/textcolor"/>
 
             <ToggleButton
                 android:id="@+id/power_telemetry.motor_rr_I"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="ToggleButton"
-                android:textOff="Sub"
-                android:textOn="Unsub" />
+                android:textOff="+"
+                android:textOn="-"
+                android:textColor="?attr/textcolor"
+                android:background="@drawable/sub_button_colors"/>
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
 
             <TextView
                 android:id="@+id/textView6"
                 android:layout_width="105dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="Motor LF:" />
+                android:text="Motor LF:"
+                android:textColor="?attr/textcolor"/>
 
             <ToggleButton
                 android:id="@+id/power_telemetry.motor_lf_I"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="ToggleButton"
-                android:textOff="Sub"
-                android:textOn="Unsub" />
+                android:textOff="+"
+                android:textOn="-"
+                android:textColor="?attr/textcolor"
+                android:background="@drawable/sub_button_colors"/>
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
 
             <TextView
                 android:id="@+id/lblMotorLR"
                 android:layout_width="105dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="Motor LR:" />
+                android:text="Motor LR:"
+                android:textColor="?attr/textcolor"/>
 
             <ToggleButton
                 android:id="@+id/power_telemetry.motor_lr_I"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="ToggleButton"
-                android:textOff="Sub"
-                android:textOn="Unsub" />
+                android:textOff="+"
+                android:textOn="-"
+                android:textColor="?attr/textcolor"
+                android:background="@drawable/sub_button_colors"/>
 
         </LinearLayout>
 
@@ -183,7 +215,9 @@
         android:layout_height="58dp"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
-        app:itemBackground="@color/cardview_light_background"
+        android:background="?attr/nav_backgroundcolor"
+        app:itemIconTint="@drawable/bottom_navigation_colors"
+        app:itemTextColor="@drawable/bottom_navigation_colors"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_navigation_menu" />

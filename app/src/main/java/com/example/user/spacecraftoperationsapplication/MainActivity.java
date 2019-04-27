@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatDelegate;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -13,6 +14,13 @@ public class MainActivity extends AppCompatActivity {
 private ImageView logo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES)
+        {
+            setTheme(R.style.darkTheme);
+        }
+        else setTheme(R.style.AppTheme);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         logo = (ImageView) findViewById(R.id.logoSplash);

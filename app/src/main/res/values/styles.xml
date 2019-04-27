@@ -8,9 +8,11 @@
         <item name="colorAccent">#2196F3</item>
         <item name="backgroundcolor">#fcfcfc</item>
         <item name="cardbackground">#ffffff</item>
-        <item name="textcolor">#808080</item>
+        <item name="textcolor">#4c4c4c</item>
         <item name="tintcolor">#000000</item>
         <item name="buttoncolor">#2196F3</item>
+        <item name="nav_backgroundcolor">#fcfcfc</item>
+        <item name="nav_textcolor">#4c4c4c</item>
     </style>
 
     <!-- Dark/Night Mode application theme. -->
@@ -20,9 +22,11 @@
         <item name="colorAccent">#2196F3</item>
         <item name="backgroundcolor">#303030</item>
         <item name="cardbackground">#424242</item>
-        <item name="textcolor">#ffffff</item>
-        <item name="tintcolor">#ffffff</item>
+        <item name="textcolor">#e5e5e5</item>
+        <item name="tintcolor">#e5e5e5</item>
         <item name="buttoncolor">#2196F3</item>
+        <item name="nav_backgroundcolor">#424242</item>
+        <item name="nav_textcolor">#b2b2b2</item>
     </style>
 
 </resources>

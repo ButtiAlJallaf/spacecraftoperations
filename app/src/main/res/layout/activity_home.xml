@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/background_light"
+    android:background="?attr/backgroundcolor"
     tools:context=".HomeActivity">
 
     <ImageView
@@ -36,7 +36,7 @@
         android:onClick="openAboutUs"
         android:text="About Us"
         android:textAllCaps="true"
-        android:textColor="#FFFFFF"
+        android:textColor="?attr/textcolor"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -56,7 +56,7 @@
         android:onClick="openSubscribe"
         android:text="Subscribe"
         android:textAllCaps="true"
-        android:textColor="#FFFFFF"
+        android:textColor="?attr/textcolor"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
@@ -76,7 +76,7 @@
         android:onClick="openCredits"
         android:text="Credits"
         android:textAllCaps="true"
-        android:textColor="#FFFFFF"
+        android:textColor="?attr/textcolor"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
@@ -90,7 +90,9 @@
         android:layout_height="58dp"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
-        app:itemBackground="@color/cardview_light_background"
+        android:background="?attr/nav_backgroundcolor"
+        app:itemIconTint="@drawable/bottom_navigation_colors"
+        app:itemTextColor="@drawable/bottom_navigation_colors"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_navigation_menu" />
