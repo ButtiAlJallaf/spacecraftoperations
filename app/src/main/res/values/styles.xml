@@ -14,6 +14,7 @@
         <item name="nav_backgroundcolor">#fcfcfc</item>
         <item name="nav_textcolor">#4c4c4c</item>
         <item name="sub_buttontextcolor">#e5e5e5</item>
+        <item name="home_textcolor">#ffffff</item>
     </style>
 
     <!-- Dark/Night Mode application theme. -->
@@ -29,6 +30,7 @@
         <item name="nav_backgroundcolor">#424242</item>
         <item name="nav_textcolor">#b2b2b2</item>
         <item name="sub_buttontextcolor">#e5e5e5</item>
+        <item name="home_textcolor">#ffffff</item>
     </style>
 
 </resources>
