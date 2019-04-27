@@ -104,15 +104,16 @@
         android:layout_marginTop="39dp"
         app:layout_constraintStart_toEndOf="@+id/tvLevel"
         app:layout_constraintTop_toBottomOf="@+id/switch1" />
+
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="58dp"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
-        android:layout_marginTop="512dp"
-        app:itemBackground="@color/lightblue"
+        app:itemBackground="@color/cardview_light_background"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:menu="@menu/bottom_navigation_menu" />
+
 </android.support.constraint.ConstraintLayout>
