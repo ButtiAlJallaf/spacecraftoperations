@@ -8,5 +8,6 @@
         <attr name="buttoncolor" format="color" />
         <attr name="nav_backgroundcolor" format="color" />
         <attr name="nav_textcolor" format="color" />
+        <attr name="sub_buttoncolor" format="color" />
     </declare-styleable>
 </resources>

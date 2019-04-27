@@ -5,14 +5,23 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatDelegate;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
 public class Credits extends AppCompatActivity {
 
+    public ImageView logo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        nightModeActivate();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_credits);
+
+        changeLogo();
 
         initBottomNav(); //Code by Butti to initialize the bottom navigation.
     }
@@ -45,5 +54,31 @@ public class Credits extends AppCompatActivity {
                 return true;
             }
         });
+    }
+
+    public void nightModeActivate()
+    {
+        if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES)
+        {
+            setTheme(R.style.darkTheme);
+        }
+        else setTheme(R.style.AppTheme);
+    }
+
+    public void changeLogo()
+    {
+        logo = (ImageView) findViewById(R.id.logo);
+        logo.setTag(1);
+
+        if(AppCompatDelegate.getDefaultNightMode()== AppCompatDelegate.MODE_NIGHT_YES)
+        {
+            logo.setImageResource(R.drawable.logowhite);
+            logo.setTag(2);
+        }
+        else
+        {
+            logo.setImageResource(R.drawable.logo);
+            logo.setTag(1);
+        }
     }
 }
