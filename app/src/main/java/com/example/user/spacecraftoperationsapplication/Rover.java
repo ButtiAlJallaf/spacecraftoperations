@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -18,6 +19,7 @@ import android.widget.ToggleButton;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
+import com.jjoe64.graphview.series.PointsGraphSeries;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,6 +28,7 @@ import org.w3c.dom.Text;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -48,6 +51,7 @@ public class Rover extends AppCompatActivity {
     private TextView tvOutputMotorRR;
     private WebSocket ws;
     private SharedPreferences sharedPref;
+    private ArrayList<Odometry> dpList;
     private Double imu_acc_x;
     private Double imu_acc_y;
 
@@ -153,13 +157,19 @@ public class Rover extends AppCompatActivity {
                         break;
                     default: System.out.println("Error: Unknown message received.");
                 }
+
                 if (imu_acc_x != null && imu_acc_y != null)
                 {
                     System.out.println("imu_acc_x = " + imu_acc_x);
                     System.out.println("imu_acc_y = " + imu_acc_y);
-                    updateGraph(R.id.graph, imu_acc_x, imu_acc_y);
+                    dpList.add(new Odometry(imu_acc_x, imu_acc_y));
                     imu_acc_x = null;
                     imu_acc_y = null;
+                    if (dpList.size() > 1) {
+                        ws.send("u odometry.imu_acc_x");
+                        ws.send("u odometry.imu_acc_y");
+                        updateGraph(R.id.graph);
+                    }
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -223,14 +233,72 @@ public class Rover extends AppCompatActivity {
         ws.close(1000, "User left the activity.");
     }
 
-    private void updateGraph(int myGraph, Double x, Double y)
+    private void updateGraph(int myGraph)
     {
         GraphView graph = findViewById(myGraph);
-        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {
-                new DataPoint(x, y),
-        });
+        System.out.println("dpList size = " + dpList.size());
+        //Collections.sort(dpList);
+        dpList = sortArray(dpList);
+        //DataPoint[] dpArray = new DataPoint[dpList.size()];
+        PointsGraphSeries<DataPoint> series = new PointsGraphSeries<>();
+        for (int i = 0; i < dpList.size(); i++)
+        {
+            //dpArray[i] = dpList.get(i);
+            double x = dpList.get(i).getX(); System.out.println("dpList.get(i).getX() = " + dpList.get(i).getX());
+            double y = dpList.get(i).getY();System.out.println("dpList.get(i).getY() = " + dpList.get(i).getY());
+            //dpArray[i] = new DataPoint(x, y);
+            series.appendData(new DataPoint(x,y),true, 1000); System.out.println("Appended data: x = " + x + " and y = " + y);
+        }
+        //DataPoint[] dpArray = dpList.toArray();
+        //LineGraphSeries<DataPoint> series = new LineGraphSeries<>(dpArray);
         graph.addSeries(series);
+        //series.resetData(new DataPoint[]);
         System.out.println("The graph has been updated.");
+        ws.send("s odometry.imu_acc_x");
+        ws.send("s odometry.imu_acc_y");
+    }
+
+    private ArrayList<Odometry> sortArray(ArrayList<Odometry> array){
+        /*
+        //Sorts the xyValues in Ascending order to prepare them for the PointsGraphSeries<DataSet>
+         */
+        int factor = Integer.parseInt(String.valueOf(Math.round(Math.pow(array.size(),2))));
+        int m = array.size() - 1;
+        int count = 0;
+        Log.d("sortArray", "sortArray: Sorting the XYArray.");
+
+        while (true) {
+            m--;
+            if (m <= 0) {
+                m = array.size() - 1;
+            }
+            Log.d("sortArray", "sortArray: m = " + m);
+            try {
+                double tempY = array.get(m - 1).getY();
+                double tempX = array.get(m - 1).getX();
+                if (tempX > array.get(m).getX()) {
+                    array.get(m - 1).setY(array.get(m).getY());
+                    array.get(m).setY(tempY);
+                    array.get(m - 1).setX(array.get(m).getX());
+                    array.get(m).setX(tempX);
+                } else if (tempX == array.get(m).getX()) {
+                    count++;
+                    Log.d("sortArray", "sortArray: count = " + count);
+                } else if (array.get(m).getX() > array.get(m - 1).getX()) {
+                    count++;
+                    Log.d("sortArray", "sortArray: count = " + count);
+                }
+                //break when factorial is done
+                if (count == factor) {
+                    break;
+                }
+            } catch (ArrayIndexOutOfBoundsException e) {
+                Log.e("sortArray", "sortArray: ArrayIndexOutOfBoundsException. Need more than 1 data point to create Plot." +
+                        e.getMessage());
+                break;
+            }
+        }
+        return array;
     }
 
     @Override
@@ -245,7 +313,7 @@ public class Rover extends AppCompatActivity {
         OkHttpClient client = new OkHttpClient();
         ws = client.newWebSocket(request, listener);
 
-        //Reads all textview outputs
+        //Gets all textviews
         tvOutputMsg = findViewById(R.id.tvOutputMsg);
         tvOutputBatteryI = findViewById(R.id.tvOutputBatteryI);
         tvOutputBatteryV = findViewById(R.id.tvOutputBatteryV);
@@ -267,6 +335,7 @@ public class Rover extends AppCompatActivity {
         setTime(R.id.tvTime);
 
         //The user subscribes to graph keys by default.
+        dpList = new ArrayList<>();
         ws.send("s odometry.imu_acc_x");
         ws.send("s odometry.imu_acc_y");
     }
