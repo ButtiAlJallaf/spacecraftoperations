@@ -48,6 +48,8 @@ public class Rover extends AppCompatActivity {
     private TextView tvOutputMotorRR;
     private WebSocket ws;
     private SharedPreferences sharedPref;
+    private Double imu_acc_x;
+    private Double imu_acc_y;
 
     private void displayToast(final String msg)
     {
@@ -143,7 +145,21 @@ public class Rover extends AppCompatActivity {
                         tvOutputMotorLR.setText(value);
                         checkValue(tvOutputMotorLR, id, jObject.getDouble("value"), 0.25, 2.75);
                         break;
+                    case "odometry.imu_acc_x":
+                        imu_acc_x = jObject.getDouble("value");
+                        break;
+                    case "odometry.imu_acc_y":
+                        imu_acc_y = jObject.getDouble("value");
+                        break;
                     default: System.out.println("Error: Unknown message received.");
+                }
+                if (imu_acc_x != null && imu_acc_y != null)
+                {
+                    System.out.println("imu_acc_x = " + imu_acc_x);
+                    System.out.println("imu_acc_y = " + imu_acc_y);
+                    updateGraph(R.id.graph, imu_acc_x, imu_acc_y);
+                    imu_acc_x = null;
+                    imu_acc_y = null;
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -204,20 +220,17 @@ public class Rover extends AppCompatActivity {
     {
         Intent i = new Intent(this, RoverTelemetry.class);
         startActivity(i);
-        ws.close(1000, "User left activity");
+        ws.close(1000, "User left the activity.");
     }
 
-    private void updateGraph(int myGraph)
+    private void updateGraph(int myGraph, Double x, Double y)
     {
         GraphView graph = findViewById(myGraph);
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {
-                new DataPoint(0, 1),
-                new DataPoint(1, 5),
-                new DataPoint(2, 3),
-                new DataPoint(3, 2),
-                new DataPoint(4, 6)
+                new DataPoint(x, y),
         });
         graph.addSeries(series);
+        System.out.println("The graph has been updated.");
     }
 
     @Override
@@ -253,6 +266,8 @@ public class Rover extends AppCompatActivity {
 
         setTime(R.id.tvTime);
 
-        updateGraph(R.id.graph);
+        //The user subscribes to graph keys by default.
+        ws.send("s odometry.imu_acc_x");
+        ws.send("s odometry.imu_acc_y");
     }
 }
