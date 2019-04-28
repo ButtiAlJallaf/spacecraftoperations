@@ -207,6 +207,19 @@ public class Rover extends AppCompatActivity {
         ws.close(1000, "User left activity");
     }
 
+    private void updateGraph(int myGraph)
+    {
+        GraphView graph = findViewById(myGraph);
+        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {
+                new DataPoint(0, 1),
+                new DataPoint(1, 5),
+                new DataPoint(2, 3),
+                new DataPoint(3, 2),
+                new DataPoint(4, 6)
+        });
+        graph.addSeries(series);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -240,15 +253,6 @@ public class Rover extends AppCompatActivity {
 
         setTime(R.id.tvTime);
 
-        //Graph
-        GraphView graph = findViewById(R.id.graph);
-        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {
-                new DataPoint(0, 1),
-                new DataPoint(1, 5),
-                new DataPoint(2, 3),
-                new DataPoint(3, 2),
-                new DataPoint(4, 6)
-        });
-        graph.addSeries(series);
+        updateGraph(R.id.graph);
     }
 }
