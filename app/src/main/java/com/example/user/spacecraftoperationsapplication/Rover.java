@@ -241,13 +241,31 @@ public class Rover extends AppCompatActivity {
             {
                 dpList.clear(); System.out.println("dpList is cleared. Size is now " + dpList.size());
                 graph.removeAllSeries();
-                series.resetData(new DataPoint[] {new DataPoint(time.getSecond(),y)});
+                series.resetData(new DataPoint[] {new DataPoint(0,y)});
                 System.out.println("The graph as been cleared.");
             }
         }
         graph.addSeries(series);
         //series.resetData(new DataPoint[]);
         System.out.println("The graph has been updated.");
+    }
+
+    private void setGraphSize(int myGraph)
+    {
+        //Code related to graph.
+        GraphView graph = findViewById(myGraph);
+
+        //set manual x bounds
+        /*
+        graph.getViewport().setYAxisBoundsManual(true);
+        graph.getViewport().setMaxY(150);
+        graph.getViewport().setMinY(-150);
+        */
+
+        //set manual y bounds
+        graph.getViewport().setXAxisBoundsManual(true);
+        graph.getViewport().setMaxX(60);
+        graph.getViewport().setMinX(0);
     }
 
     @Override
@@ -283,8 +301,9 @@ public class Rover extends AppCompatActivity {
 
         setTime(R.id.tvTime);
 
-        //The user subscribes to graph keys by default.
+        //Graph related code.
         dpList = new ArrayList<>();
+        setGraphSize(R.id.graph);
         ws.send("s odometry.imu_acc_y");
     }
 }
