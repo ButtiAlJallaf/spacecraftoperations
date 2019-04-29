@@ -231,13 +231,13 @@ public class Rover extends AppCompatActivity {
     {
         GraphView graph = findViewById(myGraph);
         System.out.println("dpList size = " + dpList.size());
-        PointsGraphSeries<DataPoint> series = new PointsGraphSeries<>();
+        LineGraphSeries<DataPoint> series = new LineGraphSeries<>();
         for (int i = 0; i < dpList.size(); i++)
         {
             LocalTime time = dpList.get(i).getTime(); System.out.println("dpList.get(i).getTime() = " + dpList.get(i).getTime());
             double y = dpList.get(i).getY(); System.out.println("dpList.get(i).getY() = " + dpList.get(i).getY());
             series.appendData(new DataPoint(time.getSecond(),y),true, 1000); System.out.println("Appended data: time.getSecond() = " + time.getSecond() + " and y = " + y);
-            if (time.getSecond() == 59)
+            if (time.getSecond() >= 58)
             {
                 dpList.clear(); System.out.println("dpList is cleared. Size is now " + dpList.size());
                 graph.removeAllSeries();
