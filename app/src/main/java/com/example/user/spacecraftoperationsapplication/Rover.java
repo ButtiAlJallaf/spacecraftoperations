@@ -53,7 +53,6 @@ public class Rover extends AppCompatActivity {
     private WebSocket ws;
     private SharedPreferences sharedPref;
     private ArrayList<Odometry> dpList;
-    private Double imu_acc_x;
     private Double imu_acc_y;
 
     private void displayToast(final String msg)
@@ -232,74 +231,24 @@ public class Rover extends AppCompatActivity {
     {
         GraphView graph = findViewById(myGraph);
         System.out.println("dpList size = " + dpList.size());
-        //dpList = sortArray(dpList);
         PointsGraphSeries<DataPoint> series = new PointsGraphSeries<>();
-        //LocalTime time = LocalTime.now();
         for (int i = 0; i < dpList.size(); i++)
         {
-            //dpArray[i] = dpList.get(i);
             LocalTime time = dpList.get(i).getTime(); System.out.println("dpList.get(i).getTime() = " + dpList.get(i).getTime());
             double y = dpList.get(i).getY(); System.out.println("dpList.get(i).getY() = " + dpList.get(i).getY());
-            //dpArray[i] = new DataPoint(x, y);
             series.appendData(new DataPoint(time.getSecond(),y),true, 1000); System.out.println("Appended data: time.getSecond() = " + time.getSecond() + " and y = " + y);
             if (time.getSecond() == 59)
             {
                 dpList.clear(); System.out.println("dpList is cleared. Size is now " + dpList.size());
+                graph.removeAllSeries();
+                series.resetData(new DataPoint[] {new DataPoint(time.getSecond(),y)});
+                System.out.println("The graph as been cleared.");
             }
         }
-        //DataPoint[] dpArray = dpList.toArray();
-        //LineGraphSeries<DataPoint> series = new LineGraphSeries<>(dpArray);
         graph.addSeries(series);
         //series.resetData(new DataPoint[]);
         System.out.println("The graph has been updated.");
     }
-
-    //Method taken from https://github.com/mitchtabian/Adding-Data-in-REAL-TIME-to-a-Graph-Graphview-lib-/blob/master/ScatterPlotDynamic/app/src/main/java/com/tabian/scatterplotdynamic/MainActivity.java#L168
-   // private ArrayList<Odometry> sortArray(ArrayList<Odometry> array){
-        /*
-        //Sorts the xyValues in Ascending order to prepare them for the PointsGraphSeries<DataSet>
-         */
-        /*
-        int factor = Integer.parseInt(String.valueOf(Math.round(Math.pow(array.size(),2))));
-        int m = array.size() - 1;
-        int count = 0;
-        Log.d("sortArray", "sortArray: Sorting the XYArray.");
-
-        while (true) {
-            m--;
-            if (m <= 0) {
-                m = array.size() - 1;
-            }
-            Log.d("sortArray", "sortArray: m = " + m);
-            try {
-                double tempY = array.get(m - 1).getY();
-                LocalTime tempX = array.get(m - 1).getTime();
-                if (tempX > array.get(m).getTime()) {
-                    array.get(m - 1).setY(array.get(m).getY());
-                    array.get(m).setY(tempY);
-                    array.get(m - 1).setX(array.get(m).getX());
-                    array.get(m).setX(tempX);
-                } else if (tempX == array.get(m).getX()) {
-                    count++;
-                    Log.d("sortArray", "sortArray: count = " + count);
-                } else if (array.get(m).getX() > array.get(m - 1).getX()) {
-                    count++;
-                    Log.d("sortArray", "sortArray: count = " + count);
-                }
-                //break when factorial is done
-                if (count == factor) {
-                    break;
-                }
-            } catch (ArrayIndexOutOfBoundsException e) {
-                Log.e("sortArray", "sortArray: ArrayIndexOutOfBoundsException. Need more than 1 data point to create Plot." +
-                        e.getMessage());
-                break;
-            }
-        }
-        return array;
-        */
-    //}
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
