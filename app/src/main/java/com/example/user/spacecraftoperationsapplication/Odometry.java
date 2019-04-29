@@ -1,24 +1,22 @@
 package com.example.user.spacecraftoperationsapplication;
 
-import java.time.LocalTime;
-
 public class Odometry {
     //Attributes
-    LocalTime time;
+    int x;
     Double y;
 
-    public Odometry(LocalTime time, Double y)
+    public Odometry(int x, Double y)
     {
-        this.time = time;
+        this.x = x;
         this.y = y;
     }
 
     //Methods
-    public LocalTime getTime() {
-        return time;
+    public int getX() {
+        return x;
     }
-    public void setTime(LocalTime time) {
-        this.time = time;
+    public void setX(int x) {
+        this.x = x;
     }
 
     public Double getY() {

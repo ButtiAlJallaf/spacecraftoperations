@@ -54,6 +54,7 @@ public class Rover extends AppCompatActivity {
     private SharedPreferences sharedPref;
     private ArrayList<Odometry> dpList;
     private Double imu_acc_y;
+    private int counter = 0;
 
     private void displayToast(final String msg)
     {
@@ -158,10 +159,10 @@ public class Rover extends AppCompatActivity {
                 if (imu_acc_y != null)
                 {
                     System.out.println("imu_acc_y = " + imu_acc_y);
-                    LocalTime time = LocalTime.now();
-                    dpList.add(new Odometry(time, imu_acc_y));
+                    counter++;
+                    dpList.add(new Odometry(counter, imu_acc_y));
                     imu_acc_y = null;
-                    if (dpList.size() > 1) {
+                    if (dpList.size() > 0) {
                         updateGraph(R.id.graph);
                     }
                 }
@@ -234,14 +235,15 @@ public class Rover extends AppCompatActivity {
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>();
         for (int i = 0; i < dpList.size(); i++)
         {
-            LocalTime time = dpList.get(i).getTime(); System.out.println("dpList.get(i).getTime() = " + dpList.get(i).getTime());
+            int x = dpList.get(i).getX(); System.out.println("dpList.get(i).getX() = " + dpList.get(i).getX());
             double y = dpList.get(i).getY(); System.out.println("dpList.get(i).getY() = " + dpList.get(i).getY());
-            series.appendData(new DataPoint(time.getSecond(),y),true, 1000); System.out.println("Appended data: time.getSecond() = " + time.getSecond() + " and y = " + y);
-            if (time.getSecond() >= 58)
+            series.appendData(new DataPoint(x,y),true, 1000); System.out.println("Appended data: x = " + x + " and y = " + y);
+            if (x >= 160)
             {
                 dpList.clear(); System.out.println("dpList is cleared. Size is now " + dpList.size());
                 graph.removeAllSeries();
                 series.resetData(new DataPoint[] {new DataPoint(0,y)});
+                counter = 0;
                 System.out.println("The graph as been cleared.");
             }
         }
@@ -256,15 +258,13 @@ public class Rover extends AppCompatActivity {
         GraphView graph = findViewById(myGraph);
 
         //set manual x bounds
-        /*
         graph.getViewport().setYAxisBoundsManual(true);
-        graph.getViewport().setMaxY(150);
-        graph.getViewport().setMinY(-150);
-        */
+        graph.getViewport().setMaxY(100);
+        graph.getViewport().setMinY(-100);
 
         //set manual y bounds
         graph.getViewport().setXAxisBoundsManual(true);
-        graph.getViewport().setMaxX(60);
+        graph.getViewport().setMaxX(160);
         graph.getViewport().setMinX(0);
     }
 
