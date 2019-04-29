@@ -26,6 +26,7 @@ import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.text.DateFormat;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -149,25 +150,19 @@ public class Rover extends AppCompatActivity {
                         tvOutputMotorLR.setText(value);
                         checkValue(tvOutputMotorLR, id, jObject.getDouble("value"), 0.25, 2.75);
                         break;
-                    case "odometry.imu_acc_x":
-                        imu_acc_x = jObject.getDouble("value");
-                        break;
                     case "odometry.imu_acc_y":
                         imu_acc_y = jObject.getDouble("value");
                         break;
                     default: System.out.println("Error: Unknown message received.");
                 }
 
-                if (imu_acc_x != null && imu_acc_y != null)
+                if (imu_acc_y != null)
                 {
-                    System.out.println("imu_acc_x = " + imu_acc_x);
                     System.out.println("imu_acc_y = " + imu_acc_y);
-                    dpList.add(new Odometry(imu_acc_x, imu_acc_y));
-                    imu_acc_x = null;
+                    LocalTime time = LocalTime.now();
+                    dpList.add(new Odometry(time, imu_acc_y));
                     imu_acc_y = null;
                     if (dpList.size() > 1) {
-                        ws.send("u odometry.imu_acc_x");
-                        ws.send("u odometry.imu_acc_y");
                         updateGraph(R.id.graph);
                     }
                 }
@@ -237,31 +232,34 @@ public class Rover extends AppCompatActivity {
     {
         GraphView graph = findViewById(myGraph);
         System.out.println("dpList size = " + dpList.size());
-        //Collections.sort(dpList);
-        dpList = sortArray(dpList);
-        //DataPoint[] dpArray = new DataPoint[dpList.size()];
+        //dpList = sortArray(dpList);
         PointsGraphSeries<DataPoint> series = new PointsGraphSeries<>();
+        //LocalTime time = LocalTime.now();
         for (int i = 0; i < dpList.size(); i++)
         {
             //dpArray[i] = dpList.get(i);
-            double x = dpList.get(i).getX(); System.out.println("dpList.get(i).getX() = " + dpList.get(i).getX());
-            double y = dpList.get(i).getY();System.out.println("dpList.get(i).getY() = " + dpList.get(i).getY());
+            LocalTime time = dpList.get(i).getTime(); System.out.println("dpList.get(i).getTime() = " + dpList.get(i).getTime());
+            double y = dpList.get(i).getY(); System.out.println("dpList.get(i).getY() = " + dpList.get(i).getY());
             //dpArray[i] = new DataPoint(x, y);
-            series.appendData(new DataPoint(x,y),true, 1000); System.out.println("Appended data: x = " + x + " and y = " + y);
+            series.appendData(new DataPoint(time.getSecond(),y),true, 1000); System.out.println("Appended data: time.getSecond() = " + time.getSecond() + " and y = " + y);
+            if (time.getSecond() == 59)
+            {
+                dpList.clear(); System.out.println("dpList is cleared. Size is now " + dpList.size());
+            }
         }
         //DataPoint[] dpArray = dpList.toArray();
         //LineGraphSeries<DataPoint> series = new LineGraphSeries<>(dpArray);
         graph.addSeries(series);
         //series.resetData(new DataPoint[]);
         System.out.println("The graph has been updated.");
-        ws.send("s odometry.imu_acc_x");
-        ws.send("s odometry.imu_acc_y");
     }
 
-    private ArrayList<Odometry> sortArray(ArrayList<Odometry> array){
+    //Method taken from https://github.com/mitchtabian/Adding-Data-in-REAL-TIME-to-a-Graph-Graphview-lib-/blob/master/ScatterPlotDynamic/app/src/main/java/com/tabian/scatterplotdynamic/MainActivity.java#L168
+   // private ArrayList<Odometry> sortArray(ArrayList<Odometry> array){
         /*
         //Sorts the xyValues in Ascending order to prepare them for the PointsGraphSeries<DataSet>
          */
+        /*
         int factor = Integer.parseInt(String.valueOf(Math.round(Math.pow(array.size(),2))));
         int m = array.size() - 1;
         int count = 0;
@@ -275,8 +273,8 @@ public class Rover extends AppCompatActivity {
             Log.d("sortArray", "sortArray: m = " + m);
             try {
                 double tempY = array.get(m - 1).getY();
-                double tempX = array.get(m - 1).getX();
-                if (tempX > array.get(m).getX()) {
+                LocalTime tempX = array.get(m - 1).getTime();
+                if (tempX > array.get(m).getTime()) {
                     array.get(m - 1).setY(array.get(m).getY());
                     array.get(m).setY(tempY);
                     array.get(m - 1).setX(array.get(m).getX());
@@ -299,7 +297,9 @@ public class Rover extends AppCompatActivity {
             }
         }
         return array;
-    }
+        */
+    //}
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -336,7 +336,6 @@ public class Rover extends AppCompatActivity {
 
         //The user subscribes to graph keys by default.
         dpList = new ArrayList<>();
-        ws.send("s odometry.imu_acc_x");
         ws.send("s odometry.imu_acc_y");
     }
 }
