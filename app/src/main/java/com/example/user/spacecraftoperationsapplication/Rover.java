@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -101,7 +102,15 @@ public class Rover extends AppCompatActivity {
         }
         else
         {
-            myTV.setTextColor(Color.GRAY);
+            //If nightmode is on, then the text will be grey, else it will be white.
+            if (AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES)
+            {
+                myTV.setTextColor(Color.WHITE);
+            }
+            else
+            {
+                myTV.setTextColor(Color.GRAY);
+            }
         }
     }
 
@@ -259,8 +268,18 @@ public class Rover extends AppCompatActivity {
         graph.getViewport().setMinX(0);
     }
 
+    private void nightModeActivate()
+    {
+        if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES)
+        {
+            setTheme(R.style.darkTheme);
+        }
+        else setTheme(R.style.AppTheme);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        nightModeActivate(); //Function by Abdullah Aljallaf to init night mode.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rover);
         initBottomNav(); //Code by Butti to initialize the bottom navigation.

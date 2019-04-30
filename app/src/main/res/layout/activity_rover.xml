@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
+    android:background="?attr/backgroundcolor"
     tools:context=".Rover">
 
     <ScrollView
@@ -18,43 +17,50 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tvOutputMsg"
                 android:layout_width="192dp"
-                android:layout_height="48dp" />
+                android:layout_height="48dp"
+                android:textColor="?attr/textcolor" />
 
             <TextView
                 android:id="@+id/tvOutputBatteryI"
                 android:layout_width="192dp"
-                android:layout_height="48dp" />
+                android:layout_height="48dp"
+                android:textColor="?attr/textcolor" />
 
             <TextView
                 android:id="@+id/tvOutputBatteryV"
                 android:layout_width="192dp"
-                android:layout_height="48dp" />
+                android:layout_height="48dp"
+                android:textColor="?attr/textcolor" />
 
             <TextView
                 android:id="@+id/tvOutputMotorLF"
                 android:layout_width="192dp"
-                android:layout_height="48dp" />
+                android:layout_height="48dp"
+                android:textColor="?attr/textcolor" />
 
             <TextView
                 android:id="@+id/tvOutputMotorLR"
                 android:layout_width="192dp"
-                android:layout_height="48dp" />
+                android:layout_height="48dp"
+                android:textColor="?attr/textcolor" />
 
             <TextView
                 android:id="@+id/tvOutputMotorRF"
                 android:layout_width="192dp"
-                android:layout_height="48dp" />
+                android:layout_height="48dp"
+                android:textColor="?attr/textcolor" />
 
             <TextView
                 android:id="@+id/tvOutputMotorRR"
                 android:layout_width="192dp"
-                android:layout_height="48dp" />
+                android:layout_height="48dp"
+                android:textColor="?attr/textcolor" />
 
             <com.jjoe64.graphview.GraphView
                 android:id="@+id/graph"
@@ -69,9 +75,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
         android:text="Time_PlaceHolder"
+        android:textColor="?attr/textcolor"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -81,7 +87,9 @@
         android:layout_height="58dp"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
-        app:itemBackground="@color/cardview_light_background"
+        android:background="?attr/nav_backgroundcolor"
+        app:itemIconTint="@drawable/bottom_navigation_colors"
+        app:itemTextColor="@drawable/bottom_navigation_colors"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_navigation_menu" />
