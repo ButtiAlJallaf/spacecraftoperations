@@ -41,6 +41,24 @@
                 android:textAllCaps="true"
                 android:textSize="30sp"
                 android:textColor="?attr/textcolor"/>
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:justificationMode="inter_word"
+                android:text="Mohammed Bin Rashid Space Center (MBRSC) is a scientific center specialized in space science and advanced technology contributing to the establishment of the national space sector in the United Arab Emirates (UAE), on firm ground, and as one of the pillars of knowledge economy."
+                android:textColor="?attr/textcolor" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:justificationMode="inter_word"
+                android:text="This app has been developed in collaboration between Higher College of Technology (HCT) and MBRSC."
+                android:textColor="?attr/textcolor" />
         </LinearLayout>
 
     </ScrollView>

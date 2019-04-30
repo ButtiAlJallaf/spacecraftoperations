@@ -11,11 +11,8 @@ import android.widget.ImageView;
 
 public class AboutUs extends AppCompatActivity {
 
-    public ImageView logo;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         nightModeActivate();
 
         super.onCreate(savedInstanceState);
@@ -29,7 +26,7 @@ public class AboutUs extends AppCompatActivity {
     private void initBottomNav()
     {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setSelectedItemId(R.id.action_rover);
+        bottomNavigationView.setSelectedItemId(R.id.action_home);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -37,17 +34,14 @@ public class AboutUs extends AppCompatActivity {
                 {
                     case R.id.action_home:
                         Intent home = new Intent(getApplicationContext(),HomeActivity.class);
-
                         startActivity(home);
                         break;
                     case R.id.action_rover:
                         Intent rover = new Intent(getApplicationContext(),Rover.class);
-
                         startActivity(rover);
                         break;
                     case R.id.action_settings:
                         Intent settings = new Intent(getApplicationContext(),Settings.class);
-
                         startActivity(settings);
                         break;
                 }
@@ -67,7 +61,7 @@ public class AboutUs extends AppCompatActivity {
 
     public void changeLogo()
     {
-        logo = (ImageView) findViewById(R.id.logo);
+        ImageView logo = findViewById(R.id.logo);
         logo.setTag(1);
 
         if(AppCompatDelegate.getDefaultNightMode()== AppCompatDelegate.MODE_NIGHT_YES)
