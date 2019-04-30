@@ -54,6 +54,7 @@ public class Settings extends AppCompatActivity {
         Switch nightmode = findViewById(R.id.nightmode_sw);
         Switch warning = findViewById(R.id.warning_sw);
 
+        //Stores user's preferences such as warning and nightmode.
         SharedPreferences settingsPref = getSharedPreferences("settings", Context.MODE_PRIVATE);
         final SharedPreferences.Editor editor = settingsPref.edit();
 
