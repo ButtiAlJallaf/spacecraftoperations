@@ -10,9 +10,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="0dp"
         android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -21,12 +18,9 @@
             android:id="@+id/logo"
             android:layout_width="300dp"
             android:layout_height="170dp"
-            android:layout_marginStart="53dp"
-            android:layout_marginLeft="53dp"
-            android:layout_marginTop="71dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginBottom="50dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="40dp"
             android:src="@drawable/logo" />
 
 
@@ -35,7 +29,7 @@
             android:layout_width="250dp"
             android:layout_height="60dp"
             android:layout_gravity="center"
-            android:layout_marginBottom="30dp"
+            android:layout_marginBottom="25dp"
             android:background="@drawable/custom_button"
             android:onClick="openAboutUs"
             android:text="About Us"
@@ -48,7 +42,7 @@
             android:layout_width="250dp"
             android:layout_height="60dp"
             android:layout_gravity="center"
-            android:layout_marginBottom="30dp"
+            android:layout_marginBottom="25dp"
             android:background="@drawable/custom_button"
             android:onClick="openSubscribe"
             android:text="Subscribe"
