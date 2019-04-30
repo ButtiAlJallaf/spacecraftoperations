@@ -226,13 +226,6 @@ public class Rover extends AppCompatActivity {
         }
     }
 
-    public void goToActivity(View v)
-    {
-        Intent i = new Intent(this, RoverTelemetry.class);
-        startActivity(i);
-        ws.close(1000, "User left the activity.");
-    }
-
     private void updateGraph(int myGraph)
     {
         GraphView graph = findViewById(myGraph);

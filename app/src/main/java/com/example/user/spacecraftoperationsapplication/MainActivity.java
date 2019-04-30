@@ -11,10 +11,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
-private ImageView logo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES)
         {
             setTheme(R.style.darkTheme);
@@ -23,28 +21,26 @@ private ImageView logo;
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        logo = (ImageView) findViewById(R.id.logoSplash);
+
+        ImageView logo = findViewById(R.id.logoSplash);
+
+        //Animation code.
         Animation myanim = AnimationUtils.loadAnimation(this, R.anim.mytransition);
         logo.startAnimation(myanim);
 
         //splash screen
         new CountDownTimer(5000,2000)
         {
-
             @Override
-            public void onTick(long millisUntilFinished)
-            {
-            }
+            public void onTick(long millisUntilFinished) {}
 
             @Override
             public void onFinish()
             {
                 //after a couple of seconds go to next activity using intent
-                Intent login = new Intent(getApplicationContext(), HomeActivity.class);
-
-                startActivity(login);
+                Intent i = new Intent(getApplicationContext(), HomeActivity.class);
+                startActivity(i);
             }
         }.start();
-
     }
 }
