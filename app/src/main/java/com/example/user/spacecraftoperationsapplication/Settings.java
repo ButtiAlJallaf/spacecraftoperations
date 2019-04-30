@@ -62,9 +62,14 @@ public class Settings extends AppCompatActivity {
             warning.setChecked(false);
         }
 
-        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+        //If the user already enabled night mode, then the switch will be on. Otherwise, off.
+        if (settingsPref.getBoolean("nightmode", false)) {
 
             nightmode.setChecked(true);
+        }
+        else
+        {
+            nightmode.setChecked(false);
         }
 
         //Event listener for nightmode switch.
@@ -74,13 +79,16 @@ public class Settings extends AppCompatActivity {
                 if (isChecked)
                 {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    restartApp();
+                    editor.putBoolean("nightmode", true);
                 }
                 else
                 {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    restartApp();
+                    editor.remove("nightmode");
+                    editor.putBoolean("nightmode", false);
                 }
+                editor.commit();
+                restartApp();
             }
         });
 
@@ -98,7 +106,7 @@ public class Settings extends AppCompatActivity {
                     editor.remove("warning");
                     editor.putBoolean("warning", false);
                 }
-                editor.apply();
+                editor.commit();
             }
         });
     }

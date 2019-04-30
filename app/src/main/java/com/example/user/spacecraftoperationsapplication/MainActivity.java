@@ -1,7 +1,9 @@
 package com.example.user.spacecraftoperationsapplication;
 
 import android.animation.ObjectAnimator;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,6 +15,18 @@ import android.widget.ImageView;
 public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SharedPreferences settingsPref = getSharedPreferences("settings", Context.MODE_PRIVATE);
+
+        //If the user has enabled nightmode, then all layouts will be dark.
+        if (settingsPref.getBoolean("nightmode", true))
+        {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }
+        else
+        {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+
         if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES)
         {
             setTheme(R.style.darkTheme);
