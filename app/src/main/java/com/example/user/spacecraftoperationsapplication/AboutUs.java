@@ -14,12 +14,9 @@ public class AboutUs extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         nightModeActivate();
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_us);
-
         changeLogo();
-
         initBottomNav(); //Code by Butti to initialize the bottom navigation.
     }
 
