@@ -58,6 +58,16 @@ public class Settings extends AppCompatActivity {
         SharedPreferences settingsPref = getSharedPreferences("settings", Context.MODE_PRIVATE);
         final SharedPreferences.Editor editor = settingsPref.edit();
 
+        //If the user already enabled warnings, then the switch will be on. Otherwise, off.
+        if (settingsPref.getBoolean("warning", true))
+        {
+            warning.setChecked(true);
+        }
+        else
+        {
+            warning.setChecked(false);
+        }
+
         if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
 
             nightmode.setChecked(true);
