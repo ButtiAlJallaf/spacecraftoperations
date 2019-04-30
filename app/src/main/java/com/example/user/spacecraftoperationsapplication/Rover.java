@@ -252,7 +252,7 @@ public class Rover extends AppCompatActivity {
         System.out.println("The graph has been updated.");
     }
 
-    private void setGraphSize(int myGraph)
+    private void setGraphProperties(int myGraph)
     {
         //Code related to graph.
         GraphView graph = findViewById(myGraph);
@@ -266,6 +266,12 @@ public class Rover extends AppCompatActivity {
         graph.getViewport().setXAxisBoundsManual(true);
         graph.getViewport().setMaxX(160);
         graph.getViewport().setMinX(0);
+
+        //If nightmode is on, then the graph will be colored white in order to be visible.
+        if (AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES)
+        {
+            graph.setBackgroundColor(Color.WHITE);
+        }
     }
 
     private void nightModeActivate()
@@ -314,7 +320,7 @@ public class Rover extends AppCompatActivity {
 
         //Graph related code.
         dpList = new ArrayList<>();
-        setGraphSize(R.id.graph);
+        setGraphProperties(R.id.graph);
         ws.send("s odometry.imu_acc_y");
 
         //Get the user's preference from settings, such as warning.
