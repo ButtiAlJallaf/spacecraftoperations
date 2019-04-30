@@ -29,13 +29,7 @@ public class Settings extends AppCompatActivity {
                         break;
                     case R.id.action_rover:
                         Intent rover = new Intent(getApplicationContext(),Rover.class);
-
                         startActivity(rover);
-                        break;
-                    case R.id.action_settings:
-                        Intent settings = new Intent(getApplicationContext(),Settings.class);
-
-                        startActivity(settings);
                         break;
                 }
                 return true;
