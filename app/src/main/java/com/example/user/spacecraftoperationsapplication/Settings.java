@@ -14,13 +14,8 @@ public class Settings extends AppCompatActivity {
 
     private Switch nightmode;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-
-        nightModeActivate();
-
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
+    private void initBottomNav()
+    {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.action_settings);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -30,7 +25,6 @@ public class Settings extends AppCompatActivity {
                 {
                     case R.id.action_home:
                         Intent home = new Intent(getApplicationContext(),HomeActivity.class);
-
                         startActivity(home);
                         break;
                     case R.id.action_rover:
@@ -47,8 +41,16 @@ public class Settings extends AppCompatActivity {
                 return true;
             }
         });
+    }
 
-        nightmode = (Switch) findViewById(R.id.nightmode_sw);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        nightModeActivate();
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_settings);
+        initBottomNav();
+
+        nightmode = findViewById(R.id.nightmode_sw);
 
         if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
 
