@@ -12,16 +12,12 @@ import android.widget.ImageView;
 
 public class HomeActivity extends AppCompatActivity {
 
-    public ImageView logo;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         nightModeActivate();
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
         changeLogo();
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
@@ -49,21 +45,18 @@ public class HomeActivity extends AppCompatActivity {
     public void openAboutUs(View view)
     {
         Intent aboutus = new Intent(getApplicationContext(),AboutUs.class);
-
         startActivity(aboutus);
     }
 
     public void openSubscribe(View view)
     {
         Intent subscribe = new Intent(getApplicationContext(),RoverTelemetry.class);
-
         startActivity(subscribe);
     }
 
     public void openCredits(View view)
     {
         Intent credits = new Intent(getApplicationContext(),Credits.class);
-
         startActivity(credits);
     }
 
@@ -78,7 +71,7 @@ public class HomeActivity extends AppCompatActivity {
 
     public void changeLogo()
     {
-        logo = (ImageView) findViewById(R.id.logo);
+        ImageView logo = findViewById(R.id.logo);
         logo.setTag(1);
 
         if(AppCompatDelegate.getDefaultNightMode()== AppCompatDelegate.MODE_NIGHT_YES)
