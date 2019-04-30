@@ -12,8 +12,6 @@ import android.widget.Switch;
 
 public class Settings extends AppCompatActivity {
 
-    private Switch nightmode;
-
     private void initBottomNav()
     {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
@@ -50,7 +48,7 @@ public class Settings extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
         initBottomNav();
 
-        nightmode = findViewById(R.id.nightmode_sw);
+        Switch nightmode = findViewById(R.id.nightmode_sw);
 
         if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
 
