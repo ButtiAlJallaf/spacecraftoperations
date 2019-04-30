@@ -74,7 +74,7 @@ public class RoverTelemetry extends AppCompatActivity {
     private void initBottomNav()
     {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setSelectedItemId(R.id.action_rover);
+        bottomNavigationView.setSelectedItemId(R.id.action_home);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -82,17 +82,14 @@ public class RoverTelemetry extends AppCompatActivity {
                 {
                     case R.id.action_home:
                         Intent home = new Intent(getApplicationContext(),HomeActivity.class);
-
                         startActivity(home);
                         break;
                     case R.id.action_rover:
                         Intent rover = new Intent(getApplicationContext(),Rover.class);
-
                         startActivity(rover);
                         break;
                     case R.id.action_settings:
                         Intent settings = new Intent(getApplicationContext(),Settings.class);
-
                         startActivity(settings);
                         break;
                 }
