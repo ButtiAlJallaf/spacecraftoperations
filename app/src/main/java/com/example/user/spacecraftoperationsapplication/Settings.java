@@ -1,6 +1,8 @@
 package com.example.user.spacecraftoperationsapplication;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
@@ -48,13 +50,19 @@ public class Settings extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
         initBottomNav();
 
+        //Get the switches.
         Switch nightmode = findViewById(R.id.nightmode_sw);
+        Switch warning = findViewById(R.id.warning_sw);
+
+        SharedPreferences settingsPref = getSharedPreferences("settings", Context.MODE_PRIVATE);
+        final SharedPreferences.Editor editor = settingsPref.edit();
 
         if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
 
             nightmode.setChecked(true);
         }
 
+        //Event listener for nightmode switch.
         nightmode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -68,6 +76,24 @@ public class Settings extends AppCompatActivity {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                     restartApp();
                 }
+            }
+        });
+
+        //Event listener for warning switch.
+        //If it is on, then warnings will be displayed to the user.
+        warning.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked)
+                {
+                    editor.putBoolean("warning", true);
+                }
+                else
+                {
+                    editor.remove("warning");
+                    editor.putBoolean("warning", false);
+                }
+                editor.apply();
             }
         });
     }

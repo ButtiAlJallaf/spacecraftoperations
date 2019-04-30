@@ -51,7 +51,8 @@ public class Rover extends AppCompatActivity {
     private TextView tvOutputMotorRF;
     private TextView tvOutputMotorRR;
     private WebSocket ws;
-    private SharedPreferences sharedPref;
+    private SharedPreferences subscriptions;
+    private SharedPreferences settingsPref;
     private ArrayList<Odometry> dpList;
     private Double imu_acc_y;
     private int counter = 0;
@@ -91,7 +92,11 @@ public class Rover extends AppCompatActivity {
         //If the value is more than or less than the range, then notify the user and set a color.
         if (value <= min || value >= max)
         {
-            displayToast("Warning: " + id + " has an irregular value.");
+            //If the user enable warnings, then toast messages will be displayed to him.
+            if (settingsPref.getBoolean("warning", true))
+            {
+                displayToast("Warning: " + id + " has an irregular value.");
+            }
             myTV.setTextColor(Color.RED);
         }
         else
@@ -215,7 +220,7 @@ public class Rover extends AppCompatActivity {
 
     private void checkSubscriptions(int myToggleButton)
     {
-        if (sharedPref.getBoolean(Integer.toString(myToggleButton), false))
+        if (subscriptions.getBoolean(Integer.toString(myToggleButton), false))
         {
             ws.send("s " + getResources().getResourceEntryName(myToggleButton));
         }
@@ -290,7 +295,7 @@ public class Rover extends AppCompatActivity {
         tvOutputMotorRR = findViewById(R.id.tvOutputMotorRR);
 
         //Check the keys the user is subscribed to.
-        sharedPref = getSharedPreferences("subscriptions", Context.MODE_PRIVATE);
+        subscriptions = getSharedPreferences("subscriptions", Context.MODE_PRIVATE);
         checkSubscriptions(R.id.ack_msg);
         checkSubscriptions(R.id.power_telemetry_battery_I);
         checkSubscriptions(R.id.power_telemetry_battery_V);
@@ -299,11 +304,15 @@ public class Rover extends AppCompatActivity {
         checkSubscriptions(R.id.power_telemetry_motor_rf_I);
         checkSubscriptions(R.id.power_telemetry_motor_rr_I);
 
+        //Display the time at the top left corner of the screen.
         setTime(R.id.tvTime);
 
         //Graph related code.
         dpList = new ArrayList<>();
         setGraphSize(R.id.graph);
         ws.send("s odometry.imu_acc_y");
+
+        //Get the user's preference from settings, such as warning.
+        settingsPref = getSharedPreferences("settings", Context.MODE_PRIVATE);
     }
 }
