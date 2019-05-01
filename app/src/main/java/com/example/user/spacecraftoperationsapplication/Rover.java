@@ -57,6 +57,7 @@ public class Rover extends AppCompatActivity {
     private ArrayList<Odometry> dpList;
     private Double imu_acc_y;
     private int counter = 0;
+    private String myUrl;
 
     private void displayToast(final String msg)
     {
@@ -194,6 +195,7 @@ public class Rover extends AppCompatActivity {
         @Override
         public void onFailure(WebSocket webSocket, Throwable t, Response response) {
             System.out.println(t.getMessage());
+            tvOutputMsg.setText("Could not connect to " + myUrl);
         }
     }
 
@@ -290,8 +292,16 @@ public class Rover extends AppCompatActivity {
         setContentView(R.layout.activity_rover);
         initBottomNav(); //Code by Butti to initialize the bottom navigation.
 
+        //Get the user's preference from settings, such as warning.
+        settingsPref = getSharedPreferences("settings", Context.MODE_PRIVATE);
+
+        //Get the IP and port saved in sp, in order to open a websocket.
+        String ip = settingsPref.getString("ip", "192.168.0.2");
+        String port = settingsPref.getString("port", "3739");
+        myUrl = "ws://" + ip + ":" + port + "/";
+
         //Establishing a websocket connection
-        Request request = new Request.Builder().url("ws://192.168.1.148:3739/").build(); //The IP of the server.
+        Request request = new Request.Builder().url(myUrl).build(); //The IP of the server.
         EchoWebSocketListener listener = new EchoWebSocketListener();
         OkHttpClient client = new OkHttpClient();
         ws = client.newWebSocket(request, listener);
@@ -322,8 +332,5 @@ public class Rover extends AppCompatActivity {
         dpList = new ArrayList<>();
         setGraphProperties(R.id.graph);
         ws.send("s odometry.imu_acc_y"); //The app subscribes to this key by default.
-
-        //Get the user's preference from settings, such as warning.
-        settingsPref = getSharedPreferences("settings", Context.MODE_PRIVATE);
     }
 }
