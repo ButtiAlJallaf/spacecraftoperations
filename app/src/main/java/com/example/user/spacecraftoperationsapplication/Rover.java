@@ -134,36 +134,35 @@ public class Rover extends AppCompatActivity {
             try {
                 JSONObject jObject = new JSONObject(text);
                 String id = jObject.getString("id");
-                String stringValue = jObject.getString("value"); //String is used for displaying.
-                double doubleValue = jObject.getDouble("value"); //Double is used to check data value.
+                String value = jObject.getString("value"); //String is used for displaying.
                 switch (id)
                 {
                     case "ack.msg":
-                        displayValue(tvOutputMsg, "Acknowledgement", stringValue);
+                        displayValue(tvOutputMsg, "Acknowledgement", value);
                         break;
                     case "power_telemetry.battery_I":
-                        displayValue(tvOutputBatteryI,"Battery I", stringValue);
-                        checkValue(tvOutputBatteryI, id, doubleValue, 0.25, 2.75);
+                        displayValue(tvOutputBatteryI,"Battery I", value);
+                        checkValue(tvOutputBatteryI, id, Double.parseDouble(value), 0.25, 2.75);
                         break;
                     case "power_telemetry.battery_V":
-                        displayValue(tvOutputBatteryV,"Battery V", stringValue);
-                        checkValue(tvOutputBatteryV, id, doubleValue, 4.75, 5.25);
+                        displayValue(tvOutputBatteryV,"Battery V", value);
+                        checkValue(tvOutputBatteryV, id, Double.parseDouble(value), 4.75, 5.25);
                         break;
                     case "power_telemetry.motor_rf_I":
-                        displayValue(tvOutputMotorRF, "Motor RF", stringValue);
-                        checkValue(tvOutputMotorRF, id, doubleValue, 0.25, 2.75);
+                        displayValue(tvOutputMotorRF, "Motor RF", value);
+                        checkValue(tvOutputMotorRF, id, Double.parseDouble(value), 0.25, 2.75);
                         break;
                     case "power_telemetry.motor_rr_I":
-                        displayValue(tvOutputMotorRR, "Motor RR", stringValue);
-                        checkValue(tvOutputMotorRR, id, doubleValue, 0.25, 2.75);
+                        displayValue(tvOutputMotorRR, "Motor RR", value);
+                        checkValue(tvOutputMotorRR, id, Double.parseDouble(value), 0.25, 2.75);
                         break;
                     case "power_telemetry.motor_lf_I":
-                        displayValue(tvOutputMotorLF, "Motor LF", stringValue);
-                        checkValue(tvOutputMotorLF, id, doubleValue, 0.25, 2.75);
+                        displayValue(tvOutputMotorLF, "Motor LF", value);
+                        checkValue(tvOutputMotorLF, id, Double.parseDouble(value), 0.25, 2.75);
                         break;
                     case "power_telemetry.motor_lr_I":
-                        displayValue(tvOutputMotorLR, "Motor LR", stringValue);
-                        checkValue(tvOutputMotorLR, id, doubleValue, 0.25, 2.75);
+                        displayValue(tvOutputMotorLR, "Motor LR", value);
+                        checkValue(tvOutputMotorLR, id, Double.parseDouble(value), 0.25, 2.75);
                         break;
                     case "odometry.imu_acc_y":
                         imu_acc_y = jObject.getDouble("value"); //Unlike the above, this value will be displayed in a graph.
