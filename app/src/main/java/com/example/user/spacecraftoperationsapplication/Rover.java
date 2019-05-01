@@ -55,7 +55,6 @@ public class Rover extends AppCompatActivity {
     private SharedPreferences subscriptions;
     private SharedPreferences settingsPref;
     private ArrayList<Odometry> dpList;
-    private Double imu_acc_y;
     private int counter = 0;
     private String myUrl;
 
@@ -165,21 +164,15 @@ public class Rover extends AppCompatActivity {
                         displayValue(tvOutputMotorLR, "Motor LR", value);
                         checkValue(tvOutputMotorLR, id, Double.parseDouble(value), 0.25, 2.75);
                         break;
-                    case "odometry.imu_acc_y":
-                        imu_acc_y = jObject.getDouble("value"); //Unlike the above, this value will be displayed in a graph.
+                    case "odometry.imu_acc_y": //Unlike the above, this value will be displayed in a graph.
+                        double imu_acc_y = jObject.getDouble("value");  //Used as y.
+                        counter++; //Used as x.
+                        dpList.add(new Odometry(counter, imu_acc_y)); //This list stores object that hold x and y.
+                        updateGraph(R.id.graph);
                         break;
                     default: System.out.println("Error: Unknown message received.");
                 }
 
-                if (imu_acc_y != null)
-                {
-                    counter++;
-                    dpList.add(new Odometry(counter, imu_acc_y));
-                    imu_acc_y = null;
-                    if (dpList.size() > 0) {
-                        updateGraph(R.id.graph);
-                    }
-                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -238,7 +231,7 @@ public class Rover extends AppCompatActivity {
             int x = dpList.get(i).getX();
             double y = dpList.get(i).getY();
             series.appendData(new DataPoint(x,y),true, 1000);
-            if (x >= 160)
+            if (x >= 160) //Clears after adding 160 or more datapoints. This is done to avoid app crash.
             {
                 dpList.clear();
                 graph.removeAllSeries();
@@ -273,7 +266,7 @@ public class Rover extends AppCompatActivity {
 
     private void nightModeActivate()
     {
-        if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES)
+        if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES)
         {
             setTheme(R.style.darkTheme);
         }
@@ -324,8 +317,8 @@ public class Rover extends AppCompatActivity {
         setTime(R.id.tvTime);
 
         //Graph related code.
-        dpList = new ArrayList<>();
-        setGraphProperties(R.id.graph);
+        dpList = new ArrayList<>(); //Init array list. This list will store Odometry objects, which will store x and y.
+        setGraphProperties(R.id.graph); //Sets the x and y bounds of this graph.
         ws.send("s odometry.imu_acc_y"); //The app subscribes to this key by default.
     }
 }
