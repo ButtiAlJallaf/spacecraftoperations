@@ -9,10 +9,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.Toast;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Settings extends AppCompatActivity {
+    //Stores user's preferences such as warning and nightmode.
+    SharedPreferences settingsPref;
+    SharedPreferences.Editor editor;
 
     private void initBottomNav()
     {
@@ -48,9 +57,17 @@ public class Settings extends AppCompatActivity {
         Switch nightmode = findViewById(R.id.nightmode_sw);
         Switch warning = findViewById(R.id.warning_sw);
 
-        //Stores user's preferences such as warning and nightmode.
-        SharedPreferences settingsPref = getSharedPreferences("settings", Context.MODE_PRIVATE);
-        final SharedPreferences.Editor editor = settingsPref.edit();
+        //Get the edittext.
+        EditText etIP = findViewById(R.id.etIP);
+        EditText etPort = findViewById(R.id.etPort);
+
+        //Initliaze sharedprefences and editor for reading and storing user preferences.
+        settingsPref = getSharedPreferences("settings", Context.MODE_PRIVATE);
+        editor = settingsPref.edit();
+
+        //Inserts the saved IP and port to the edit texts.
+        etIP.setText(settingsPref.getString("ip", "192.168.0.2"));
+        etPort.setText(settingsPref.getString("port", "3739"));
 
         //If the user already enabled warnings, then the switch will be on. Otherwise, off.
         if (settingsPref.getBoolean("warning", true))
@@ -111,7 +128,7 @@ public class Settings extends AppCompatActivity {
         });
     }
 
-    public void nightModeActivate()
+    private void nightModeActivate()
     {
         if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES)
         {
@@ -120,10 +137,67 @@ public class Settings extends AppCompatActivity {
         else setTheme(R.style.AppTheme);
     }
 
-    public void restartApp()
+    private void restartApp()
     {
         Intent i = new Intent (getApplicationContext(),Settings.class);
         startActivity(i);
         finish();
+    }
+
+    private void displayToast(String msg)
+    {
+        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+    }
+
+    //Method for the save network config button.
+    public void saveNetworkConfig(View v)
+    {
+        //Boolean used for validation. If it is true, then user has entered correct data. Else is correct.
+        boolean valid = true;
+
+        //Read the IP.
+        EditText etIP = findViewById(R.id.etIP);
+        String ip = etIP.getText().toString();
+
+        //Read the port.
+        EditText etPort = findViewById(R.id.etPort);
+        String port = etPort.getText().toString();
+
+        //If port is empty, display error.
+        if (port.matches(""))
+        {
+            etPort.setError("Please enter a valid port.");
+            valid = false;
+        }
+
+        //Convert port string to port number if the user has entered a number..
+        if (valid) {
+            int portNum = Integer.parseInt(port);
+            if (portNum < 0 || portNum > 65535) {
+                etPort.setError("Port must be between 0 and 65535.");
+                valid = false;
+            }
+        }
+
+        //If it is not matching the IP pattern, then display error.
+        if (!ip.matches("\\b\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\b"))
+        {
+            etIP.setError("Please enter a valid IP.");
+            valid = false;
+        }
+
+        //If data is not valid, then it will not be saved.
+        if (!valid)
+        {
+            return;
+        }
+        else
+        {
+            //Adds the IP and port to shared preferences.
+            editor.putString("ip", ip);
+            editor.putString("port", port); //Should be string.
+            editor.commit();
+            displayToast("Network config saved!");
+        }
     }
 }

@@ -128,8 +128,9 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:ems="10"
-                        android:textColor="?attr/textcolor"
-                        android:inputType="numberDecimal" />
+                        android:inputType="number"
+                        android:digits="0123456789."
+                        android:textColor="?attr/textcolor" />
 
                 </LinearLayout>
 
@@ -154,7 +155,16 @@
                         android:ems="10"
                         android:textColor="?attr/textcolor"
                         android:inputType="number" />
+
                 </LinearLayout>
+
+                <Button
+                    android:id="@+id/btnSaveNetworkConfig"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="saveNetworkConfig"
+                    android:text="Save Network Config" />
 
             </LinearLayout>
         </android.support.v7.widget.CardView>
