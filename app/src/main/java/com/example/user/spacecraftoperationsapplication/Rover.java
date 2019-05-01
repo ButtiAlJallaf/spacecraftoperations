@@ -120,8 +120,13 @@ public class Rover extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                //If the textview is invisible, then it will be visible.
+                if (textview.getVisibility() == View.GONE)
+                {
+                    textview.setVisibility(View.VISIBLE);
+                }
+                //Display the values to the user.
                 String formattedValue = label + ": \n" + value;
-                textview.setVisibility(View.VISIBLE);
                 textview.setText(formattedValue);
             }
         });
