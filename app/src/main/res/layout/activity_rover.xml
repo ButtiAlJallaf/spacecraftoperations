@@ -24,43 +24,50 @@
                 android:id="@+id/tvOutputMsg"
                 android:layout_width="192dp"
                 android:layout_height="48dp"
-                android:textColor="?attr/textcolor" />
+                android:textColor="?attr/textcolor"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/tvOutputBatteryI"
                 android:layout_width="192dp"
                 android:layout_height="48dp"
-                android:textColor="?attr/textcolor" />
+                android:textColor="?attr/textcolor"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/tvOutputBatteryV"
                 android:layout_width="192dp"
                 android:layout_height="48dp"
-                android:textColor="?attr/textcolor" />
+                android:textColor="?attr/textcolor"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/tvOutputMotorLF"
                 android:layout_width="192dp"
                 android:layout_height="48dp"
-                android:textColor="?attr/textcolor" />
+                android:textColor="?attr/textcolor"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/tvOutputMotorLR"
                 android:layout_width="192dp"
                 android:layout_height="48dp"
-                android:textColor="?attr/textcolor" />
+                android:textColor="?attr/textcolor"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/tvOutputMotorRF"
                 android:layout_width="192dp"
                 android:layout_height="48dp"
-                android:textColor="?attr/textcolor" />
+                android:textColor="?attr/textcolor"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/tvOutputMotorRR"
                 android:layout_width="192dp"
                 android:layout_height="48dp"
-                android:textColor="?attr/textcolor" />
+                android:textColor="?attr/textcolor"
+                android:visibility="gone" />
 
             <com.jjoe64.graphview.GraphView
                 android:id="@+id/graph"

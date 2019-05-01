@@ -115,10 +115,16 @@ public class Rover extends AppCompatActivity {
     }
 
     //Takes the resouce id of a textview. Label and value of the json object.
-    private void displayValue(TextView textview, String label, String value)
+    private void displayValue(final TextView textview, final String label, final String value)
     {
-        String formattedValue = label + ": " + value;
-        textview.setText(formattedValue);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                String formattedValue = label + ": \n" + value;
+                textview.setVisibility(View.VISIBLE);
+                textview.setText(formattedValue);
+            }
+        });
     }
 
     private final class EchoWebSocketListener extends WebSocketListener {
