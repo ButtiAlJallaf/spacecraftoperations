@@ -103,7 +103,7 @@ public class Rover extends AppCompatActivity {
         else
         {
             //If nightmode is on, then the text will be grey, else it will be white.
-            if (AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES)
+            if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES)
             {
                 myTV.setTextColor(Color.WHITE);
             }
@@ -112,6 +112,13 @@ public class Rover extends AppCompatActivity {
                 myTV.setTextColor(Color.GRAY);
             }
         }
+    }
+
+    //Takes the resouce id of a textview. Label and value of the json object.
+    private void displayValue(TextView textview, String label, String value)
+    {
+        String formattedValue = label + ": " + value;
+        textview.setText(formattedValue);
     }
 
     private final class EchoWebSocketListener extends WebSocketListener {
@@ -127,45 +134,39 @@ public class Rover extends AppCompatActivity {
             try {
                 JSONObject jObject = new JSONObject(text);
                 String id = jObject.getString("id");
-                String value;
+                String stringValue = jObject.getString("value"); //String is used for displaying.
+                double doubleValue = jObject.getDouble("value"); //Double is used to check data value.
                 switch (id)
                 {
                     case "ack.msg":
-                        value = "Acknowledgement: " + jObject.getString("value");
-                        tvOutputMsg.setText(value);
+                        displayValue(tvOutputMsg, "Acknowledgement", stringValue);
                         break;
                     case "power_telemetry.battery_I":
-                        value = "Battery I: " + jObject.getString("value");
-                        tvOutputBatteryI.setText(value);
-                        checkValue(tvOutputBatteryI, id, jObject.getDouble("value"), 0.25, 2.75);
+                        displayValue(tvOutputBatteryI,"Battery I", stringValue);
+                        checkValue(tvOutputBatteryI, id, doubleValue, 0.25, 2.75);
                         break;
                     case "power_telemetry.battery_V":
-                        value = "Battery V: " + jObject.getString("value");
-                        tvOutputBatteryV.setText(value);
-                        checkValue(tvOutputBatteryV, id, jObject.getDouble("value"), 4.75, 5.25);
+                        displayValue(tvOutputBatteryV,"Battery V", stringValue);
+                        checkValue(tvOutputBatteryV, id, doubleValue, 4.75, 5.25);
                         break;
                     case "power_telemetry.motor_rf_I":
-                        value = "Motor RF: " + jObject.getString("value");
-                        tvOutputMotorRF.setText(value);
-                        checkValue(tvOutputMotorRF, id, jObject.getDouble("value"), 0.25, 2.75);
+                        displayValue(tvOutputMotorRF, "Motor RF", stringValue);
+                        checkValue(tvOutputMotorRF, id, doubleValue, 0.25, 2.75);
                         break;
                     case "power_telemetry.motor_rr_I":
-                        value = "Motor RR: " + jObject.getString("value");
-                        tvOutputMotorRR.setText(value);
-                        checkValue(tvOutputMotorRR, id, jObject.getDouble("value"), 0.25, 2.75);
+                        displayValue(tvOutputMotorRR, "Motor RR", stringValue);
+                        checkValue(tvOutputMotorRR, id, doubleValue, 0.25, 2.75);
                         break;
                     case "power_telemetry.motor_lf_I":
-                        value = "Motor LF: " + jObject.getString("value");
-                        tvOutputMotorLF.setText(value);
-                        checkValue(tvOutputMotorLF, id, jObject.getDouble("value"), 0.25, 2.75);
+                        displayValue(tvOutputMotorLF, "Motor LF", stringValue);
+                        checkValue(tvOutputMotorLF, id, doubleValue, 0.25, 2.75);
                         break;
                     case "power_telemetry.motor_lr_I":
-                        value = "Motor LR: " + jObject.getString("value");
-                        tvOutputMotorLR.setText(value);
-                        checkValue(tvOutputMotorLR, id, jObject.getDouble("value"), 0.25, 2.75);
+                        displayValue(tvOutputMotorLR, "Motor LR", stringValue);
+                        checkValue(tvOutputMotorLR, id, doubleValue, 0.25, 2.75);
                         break;
                     case "odometry.imu_acc_y":
-                        imu_acc_y = jObject.getDouble("value");
+                        imu_acc_y = jObject.getDouble("value"); //Unlike the above, this value will be displayed in a graph.
                         break;
                     default: System.out.println("Error: Unknown message received.");
                 }
@@ -321,7 +322,7 @@ public class Rover extends AppCompatActivity {
         //Graph related code.
         dpList = new ArrayList<>();
         setGraphProperties(R.id.graph);
-        ws.send("s odometry.imu_acc_y");
+        ws.send("s odometry.imu_acc_y"); //The app subscribes to this key by default.
 
         //Get the user's preference from settings, such as warning.
         settingsPref = getSharedPreferences("settings", Context.MODE_PRIVATE);
