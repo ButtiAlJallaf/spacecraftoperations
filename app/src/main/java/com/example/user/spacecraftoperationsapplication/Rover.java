@@ -173,7 +173,6 @@ public class Rover extends AppCompatActivity {
 
                 if (imu_acc_y != null)
                 {
-                    System.out.println("imu_acc_y = " + imu_acc_y);
                     counter++;
                     dpList.add(new Odometry(counter, imu_acc_y));
                     imu_acc_y = null;
@@ -233,25 +232,21 @@ public class Rover extends AppCompatActivity {
     private void updateGraph(int myGraph)
     {
         GraphView graph = findViewById(myGraph);
-        System.out.println("dpList size = " + dpList.size());
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>();
         for (int i = 0; i < dpList.size(); i++)
         {
-            int x = dpList.get(i).getX(); System.out.println("dpList.get(i).getX() = " + dpList.get(i).getX());
-            double y = dpList.get(i).getY(); System.out.println("dpList.get(i).getY() = " + dpList.get(i).getY());
-            series.appendData(new DataPoint(x,y),true, 1000); System.out.println("Appended data: x = " + x + " and y = " + y);
+            int x = dpList.get(i).getX();
+            double y = dpList.get(i).getY();
+            series.appendData(new DataPoint(x,y),true, 1000);
             if (x >= 160)
             {
-                dpList.clear(); System.out.println("dpList is cleared. Size is now " + dpList.size());
+                dpList.clear();
                 graph.removeAllSeries();
                 series.resetData(new DataPoint[] {new DataPoint(0,y)});
                 counter = 0;
-                System.out.println("The graph as been cleared.");
             }
         }
         graph.addSeries(series);
-        //series.resetData(new DataPoint[]);
-        System.out.println("The graph has been updated.");
     }
 
     private void setGraphProperties(int myGraph)
